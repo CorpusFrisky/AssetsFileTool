@@ -1,28 +1,46 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <Windows.h>
+#include <ShlObj.h>
 
 #include "AssetsFileReader.h"
 #include "FileOpenService.h"
 #include "AppContext.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 
-const char* filePath = "C:\\Users\\17046\\Downloads\\sharedassets0-reliable_shop_v1.1.assets";
+std::wstring GetDownloadsFolder()
+{
+    wchar_t* path = nullptr;
+    HRESULT hr = SHGetKnownFolderPath(FOLDERID_Downloads, 0, NULL, &path);
+    if (SUCCEEDED(hr))
+    {
+        std::wstring downloadsPath(path);
+        CoTaskMemFree(path); // Free the allocated memory
+        return downloadsPath;
+    }
+    else
+    {
+        // Handle error (e.g., fallback to a default path)
+        return L"";
+    }
+}
 
 int main() {
+    fs::path downloadPath = GetDownloadsFolder();
+    fs::path filePath = downloadPath / "sharedassets0-reliable_shop_v1.1.assets";
+    std::string filePathStr = filePath.string();
+    const char* pFilePath = filePathStr.c_str();
+
     std::shared_ptr<IAssetsReader> pReader = std::shared_ptr<IAssetsReader>(
-        Create_AssetsReaderFromFile(filePath, true, RWOpenFlags_Immediately),
+        Create_AssetsReaderFromFile(pFilePath, true, RWOpenFlags_Immediately),
         Free_AssetsReader);
 
-    /*FileOpenService *fileOpenService = new FileOpenService(std::move(pReader), false, filePath, 0, 0, true, true, false, false);
-    fileOpenService->execute();*/
-    /*AssetsFileTable *fileTable = ((AssetsFileContext*)fileOpenService->pFileContext)->getAssetsFileTable();
-    AssetFileInfoEx* pFileInfo = fileTable->getAssetInfo(114);*/
-
     AppContext* pAppContext = new AppContext(); \
-        //auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-        //AppContext *pContext, std::shared_ptr<IAssetsReader> pReader, bool readerIsModified, const std::string &path,
-    AppContext::FileOpenTask* task = new AppContext::FileOpenTask(pAppContext, pReader, false, filePath);
+    AppContext::FileOpenTask* task = new AppContext::FileOpenTask(pAppContext, pReader, false, pFilePath);
     task->execute();
     pAppContext->processMessage(AppContextMsg_OnFileOpenAsAssets, &task);
 
