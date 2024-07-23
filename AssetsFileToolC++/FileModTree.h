@@ -1,7 +1,7 @@
 #pragma once
 #include "api.h"
 #include "FileContext.h"
-#include "../ModInstaller/InstallerDataFormat.h"
+//#include "../ModInstaller/InstallerDataFormat.h"
 #include <assert.h>
 #include <exception>
 #include <vector>
@@ -51,8 +51,8 @@ public:
 
 	uintptr_t treeViewEntry;
 	inline VisibleFileEntry() : fileType(FileContext_Generic), pathNull(true), treeViewEntry((uintptr_t)-1) {}
-	UABE_Generic_API VisibleFileEntry(class AppContext &appContext, std::shared_ptr<class FileContextInfo> contextInfo);
-	UABE_Generic_API VisibleFileEntry(class AppContext &appContext, InstallerPackageAssetsDesc &installerPackageDesc);
+	VisibleFileEntry(class AppContext &appContext, std::shared_ptr<class FileContextInfo> contextInfo);
+	//VisibleFileEntry(class AppContext &appContext, InstallerPackageAssetsDesc &installerPackageDesc);
 	//Generate a VisibleFileEntry from a BundleEntryModifierFromAssets, BundleEntryModifierFromBundle or BundleEntryModifierByResources.
 	//-> type: EBundleReplacers (InternalBundleReplacer.h)
 	VisibleFileEntry(class AppContext& appContext, std::shared_ptr<BundleReplacer>& fromReplacer, unsigned int type);
@@ -215,9 +215,10 @@ public:
 			}
 			break;
 		default:
-			throw std::domain_error("VisibleFileEntry merging unknown file types!");
+			/*throw std::domain_error("VisibleFileEntry merging unknown file types!");*/
+			break;
 		}
 	}
 		
-	UABE_Generic_API std::shared_ptr<BundleReplacer> produceBundleReplacer();
+	std::shared_ptr<BundleReplacer> produceBundleReplacer();
 };

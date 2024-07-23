@@ -2,7 +2,7 @@
 #include "api.h"
 #include "FileContext.h"
 #include "AssetContainerList.h"
-//#include "FileModTree.h"
+#include "FileModTree.h"
 #include "AssetsReplacer.h"
 #include "BundleReplacer.h"
 #include <stdint.h>
@@ -421,7 +421,7 @@ public:
 	public:
 		EBundleFileDecompressStatus decompressStatus;
 		EBundleFileOpenStatus reopenStatus;
-		DecompressTask(std::shared_ptr<BundleFileContextInfo> &pContextInfo, std::string outputPath);
+		DecompressTask(AppContext& appContext, std::shared_ptr<BundleFileContextInfo> &pContextInfo, std::string outputPath);
 		const std::string &getName();
 		int execute();
 		inline std::shared_ptr<BundleFileContextInfo> &getFileContextInfo()

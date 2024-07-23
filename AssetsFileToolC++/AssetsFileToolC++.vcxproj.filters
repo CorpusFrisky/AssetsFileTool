@@ -117,6 +117,9 @@
     <ClCompile Include="AssetBundleFileTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileModTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libCompression\7zTypes.h">
@@ -258,6 +261,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AssetBundleFileTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileModTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

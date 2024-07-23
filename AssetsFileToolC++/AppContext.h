@@ -110,7 +110,7 @@ protected:
 	bool autoDetectDependencies; //Automatically assign the references of newly loaded and existing AssetsFileContextInfo.
 
 	//Processes a message. Must be called by the main thread after a corresponding signalMainThread call.
-	virtual bool processMessage(EAppContextMsg message, void *args);
+	//virtual bool processMessage(EAppContextMsg message, void *args);
 	
 	//The following functions are called by processMessage.
 	//FileOpenTask / BundleEntryOpenTask done

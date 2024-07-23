@@ -1565,18 +1565,18 @@ size_t BundleFileContextInfo::getEntryCount()
 	size_t ret = this->directoryRefs.size();
 	return ret;
 }
-//BundleFileContextInfo::DecompressTask::DecompressTask(AppContext &appContext, std::shared_ptr<BundleFileContextInfo> &pContextInfo, std::string outputPath)
-//	: appContext(appContext), pFileContextInfo(pContextInfo), outputPath(outputPath),
-//	decompressStatus(static_cast<EBundleFileDecompressStatus>(TaskResult_Canceled)), 
-//	reopenStatus(static_cast<EBundleFileOpenStatus>(TaskResult_Canceled))
-//{
-//	assert(pFileContextInfo->getBundleFileContext() && pFileContextInfo->getBundleFileContext()->getBundleFile());
-//	name = "Decompress bundle : " + pContextInfo->getFileName() + "";
-//}
-//const std::string &BundleFileContextInfo::DecompressTask::getName()
-//{
-//	return name;
-//}
+BundleFileContextInfo::DecompressTask::DecompressTask(AppContext &appContext, std::shared_ptr<BundleFileContextInfo> &pContextInfo, std::string outputPath)
+	: appContext(appContext), pFileContextInfo(pContextInfo), outputPath(outputPath),
+	decompressStatus(static_cast<EBundleFileDecompressStatus>(-128)),
+	reopenStatus(static_cast<EBundleFileOpenStatus>(-128))
+{
+	assert(pFileContextInfo->getBundleFileContext() && pFileContextInfo->getBundleFileContext()->getBundleFile());
+	name = "Decompress bundle : " + pContextInfo->getFileName() + "";
+}
+const std::string &BundleFileContextInfo::DecompressTask::getName()
+{
+	return name;
+}
 int BundleFileContextInfo::DecompressTask::execute()
 {
 	if (!this->pFileContextInfo->getBundleFileContext() || !this->pFileContextInfo->getBundleFileContext()->getBundleFile())

@@ -148,6 +148,7 @@
     <ClCompile Include="ClassDatabaseFile.cpp" />
     <ClCompile Include="FileContext.cpp" />
     <ClCompile Include="FileContextInfo.cpp" />
+    <ClCompile Include="FileModTree.cpp" />
     <ClCompile Include="FileOpenService.cpp" />
     <ClCompile Include="libCompression\lz4.c" />
     <ClCompile Include="libCompression\lz4dec.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="defines.h" />
     <ClInclude Include="FileContext.h" />
     <ClInclude Include="FileContextInfo.h" />
+    <ClInclude Include="FileModTree.h" />
     <ClInclude Include="FileOpenService.h" />
     <ClInclude Include="inc\half.hpp" />
     <ClInclude Include="inc\LZMA\7zTypes.h" />

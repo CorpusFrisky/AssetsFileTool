@@ -1,8 +1,8 @@
 #include "FileModTree.h"
 #include "AppContext.h"
-#include "../ModInstaller/InstallerDataFormat.h"
-#include "../AssetsTools/InternalAssetsReplacer.h"
-#include "../AssetsTools/InternalBundleReplacer.h"
+//#include "../ModInstaller/InstallerDataFormat.h"
+#include "InternalAssetsReplacer.h"
+#include "InternalBundleReplacer.h"
 #include <algorithm>
 
 VisibleFileEntry::VisibleFileEntry(AppContext &appContext, std::shared_ptr<FileContextInfo> pContextInfo)
@@ -176,65 +176,65 @@ void VisibleFileEntry::constructFromReplacer(class AppContext &appContext, std::
 		throw std::domain_error("VisibleFileEntry constructed with an unknown/unsupported replacer type!");
 	}
 }
-VisibleFileEntry::VisibleFileEntry(class AppContext &appContext, InstallerPackageAssetsDesc &installerPackageDesc)
-			: treeViewEntry(0), pathNull(false)
-{
-	this->pathOrName.assign(installerPackageDesc.path);
-	switch (installerPackageDesc.type)
-	{
-		case InstallerPackageAssetsType::Assets:
-		{
-			this->fileType = FileContext_Assets;
-			this->replacers.resize(installerPackageDesc.replacers.size());
-			for (size_t i = 0; i < installerPackageDesc.replacers.size(); ++i)
-				this->replacers[i].pReplacer = installerPackageDesc.replacers[i];
-		}
-		break;
-		case InstallerPackageAssetsType::Bundle:
-		{
-			this->fileType = FileContext_Bundle;
-			for (size_t i = 0; i < installerPackageDesc.replacers.size(); ++i)
-			{
-				std::shared_ptr<BundleReplacer> pReplacer = std::reinterpret_pointer_cast<BundleReplacer>(installerPackageDesc.replacers[i]);
-				if (pReplacer->GetType() == BundleReplacement_AddOrModify)
-				{
-					if (dynamic_cast<BundleEntryModifierFromAssets*>(pReplacer.get()) != nullptr)
-					{
-						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierFromAssets));
-					}
-					else if (dynamic_cast<BundleEntryModifierFromBundle*>(pReplacer.get()) != nullptr)
-					{
-						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierFromBundle));
-					}
-					else if (dynamic_cast<BundleEntryModifierByResources*>(pReplacer.get()) != nullptr
-						&& pReplacer->RequiresEntryReader())
-					{
-						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierByResources));
-					}
-					else
-						this->replacers.push_back(VisibleReplacerEntry(std::move(pReplacer)));
-				}
-				else
-					this->replacers.push_back(VisibleReplacerEntry(std::move(pReplacer)));
-			}
-		}
-		break;
-		case InstallerPackageAssetsType::Resources:
-		{
-			this->fileType = FileContext_Resources;
-			if (installerPackageDesc.replacers.size() != 1
-				|| dynamic_cast<BundleEntryModifierByResources*>(installerPackageDesc.replacers[0].get()) == nullptr)
-			{
-				throw std::invalid_argument("VisibleFileEntry: Resources installer package entry does not consist of a singular resources bundle replacer!");
-			}
-			this->replacers.resize(1);
-			this->replacers[0].pReplacer = installerPackageDesc.replacers[0];
-		}
-		break;
-		default:
-			throw std::domain_error("VisibleFileEntry constructed with an unknown/unsupported installer package entry type!");
-	}
-}
+//VisibleFileEntry::VisibleFileEntry(class AppContext &appContext, InstallerPackageAssetsDesc &installerPackageDesc)
+//			: treeViewEntry(0), pathNull(false)
+//{
+//	this->pathOrName.assign(installerPackageDesc.path);
+//	switch (installerPackageDesc.type)
+//	{
+//		case InstallerPackageAssetsType::Assets:
+//		{
+//			this->fileType = FileContext_Assets;
+//			this->replacers.resize(installerPackageDesc.replacers.size());
+//			for (size_t i = 0; i < installerPackageDesc.replacers.size(); ++i)
+//				this->replacers[i].pReplacer = installerPackageDesc.replacers[i];
+//		}
+//		break;
+//		case InstallerPackageAssetsType::Bundle:
+//		{
+//			this->fileType = FileContext_Bundle;
+//			for (size_t i = 0; i < installerPackageDesc.replacers.size(); ++i)
+//			{
+//				std::shared_ptr<BundleReplacer> pReplacer = std::reinterpret_pointer_cast<BundleReplacer>(installerPackageDesc.replacers[i]);
+//				if (pReplacer->GetType() == BundleReplacement_AddOrModify)
+//				{
+//					if (dynamic_cast<BundleEntryModifierFromAssets*>(pReplacer.get()) != nullptr)
+//					{
+//						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierFromAssets));
+//					}
+//					else if (dynamic_cast<BundleEntryModifierFromBundle*>(pReplacer.get()) != nullptr)
+//					{
+//						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierFromBundle));
+//					}
+//					else if (dynamic_cast<BundleEntryModifierByResources*>(pReplacer.get()) != nullptr
+//						&& pReplacer->RequiresEntryReader())
+//					{
+//						this->subFiles.push_back(VisibleFileEntry(appContext, pReplacer, BundleReplacer_BundleEntryModifierByResources));
+//					}
+//					else
+//						this->replacers.push_back(VisibleReplacerEntry(std::move(pReplacer)));
+//				}
+//				else
+//					this->replacers.push_back(VisibleReplacerEntry(std::move(pReplacer)));
+//			}
+//		}
+//		break;
+//		case InstallerPackageAssetsType::Resources:
+//		{
+//			this->fileType = FileContext_Resources;
+//			if (installerPackageDesc.replacers.size() != 1
+//				|| dynamic_cast<BundleEntryModifierByResources*>(installerPackageDesc.replacers[0].get()) == nullptr)
+//			{
+//				throw std::invalid_argument("VisibleFileEntry: Resources installer package entry does not consist of a singular resources bundle replacer!");
+//			}
+//			this->replacers.resize(1);
+//			this->replacers[0].pReplacer = installerPackageDesc.replacers[0];
+//		}
+//		break;
+//		default:
+//			throw std::domain_error("VisibleFileEntry constructed with an unknown/unsupported installer package entry type!");
+//	}
+//}
 
 std::shared_ptr<BundleReplacer> VisibleFileEntry::produceBundleReplacer()
 {
