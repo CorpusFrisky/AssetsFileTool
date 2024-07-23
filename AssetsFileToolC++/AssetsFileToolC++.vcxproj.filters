@@ -13,16 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="libCompression">
+    <Filter Include="Resource Files\libCompression">
       <UniqueIdentifier>{419a0d20-4a7d-4dbd-b07d-10adabaf8448}</UniqueIdentifier>
     </Filter>
-    <Filter Include="libStringConverter">
+    <Filter Include="Resource Files\libStringConverter">
       <UniqueIdentifier>{16cc2d35-5741-45be-8135-585b3a9d5927}</UniqueIdentifier>
     </Filter>
-    <Filter Include="inc">
+    <Filter Include="Resource Files\inc">
       <UniqueIdentifier>{b3800382-90ba-4e4c-b70e-cfb3cad8bfc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="inc\LZMA">
+    <Filter Include="Resource Files\inc\LZMA">
       <UniqueIdentifier>{81889b46-1907-45cf-980a-a1937d027bad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -58,43 +58,157 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\lz4.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\lz4dec.cpp">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\lz4enc.cpp">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\lz4frame.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\lz4hc.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\LzFind.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\LzFindMt.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\LzmaDec.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\LzmaEnc.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\Threads.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </ClCompile>
     <ClCompile Include="libCompression\xxhash.c">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
+    </ClCompile>
+    <ClCompile Include="FileContextInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetContainerList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BundleReplacer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetBundleFileFormat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetIterator.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="libStringConverter\convert.cpp">
-      <Filter>libStringConverter</Filter>
+      <Filter>Resource Files\libStringConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="AppContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManagerFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetBundleFileTable.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="libCompression\7zTypes.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\api.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\Compiler.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4dec.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4e.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4enc.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4frame.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4frame_static.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\lz4hc.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\LzFind.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\LzFindMt.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\LzHash.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\LzmaDec.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\LzmaEnc.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\Precomp.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\Threads.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="libCompression\xxhash.h">
+      <Filter>Resource Files\libCompression</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\half.hpp">
+      <Filter>Resource Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\7zTypes.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\api.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\LzmaDec.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\LzmaEnc.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\LzmaLib.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\LZMA\Types.h">
+      <Filter>Resource Files\inc\LZMA</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassDatabaseFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AppContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetBundleFileFormat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetContainerList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="AssetsFileFormat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -104,123 +218,60 @@
     <ClInclude Include="AssetsFileReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="AssetsFileTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AssetsReplacer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InternalAssetsReplacer.h">
+    <ClInclude Include="AssetTypeClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ClassDatabaseFile.h">
+    <ClInclude Include="BundleReplacer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileOpenService.h">
+    <ClInclude Include="libStringConverter\convert.h">
+      <Filter>Resource Files\libStringConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetsFileTable.h">
+    <ClInclude Include="FileContextInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetTypeClass.h">
+    <ClInclude Include="FileOpenService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libCompression\7zTypes.h">
-      <Filter>libCompression</Filter>
+    <ClInclude Include="InternalAssetsReplacer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libCompression\api.h">
-      <Filter>libCompression</Filter>
+    <ClInclude Include="InternalBundleReplacer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libCompression\Compiler.h">
-      <Filter>libCompression</Filter>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libCompression\lz4.h">
-      <Filter>libCompression</Filter>
+    <ClInclude Include="ResourceManagerFile.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libCompression\lz4dec.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\lz4e.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\lz4enc.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\lz4frame.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\lz4frame_static.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\lz4hc.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\LzFind.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\LzFindMt.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\LzHash.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\LzmaDec.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\LzmaEnc.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\Precomp.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\Threads.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libCompression\xxhash.h">
-      <Filter>libCompression</Filter>
-    </ClInclude>
-    <ClInclude Include="libStringConverter\convert.h">
-      <Filter>libStringConverter</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\half.hpp">
-      <Filter>inc</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\7zTypes.h">
-      <Filter>inc\LZMA</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\api.h">
-      <Filter>inc\LZMA</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\LzmaDec.h">
-      <Filter>inc\LZMA</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\LzmaEnc.h">
-      <Filter>inc\LZMA</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\LzmaLib.h">
-      <Filter>inc\LZMA</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\LZMA\Types.h">
-      <Filter>inc\LZMA</Filter>
+    <ClInclude Include="AssetBundleFileTable.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="libCompression\CMakeLists.txt">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </Text>
     <Text Include="libStringConverter\CMakeLists.txt">
-      <Filter>libStringConverter</Filter>
+      <Filter>Resource Files\libStringConverter</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="libCompression\lz4_LICENSE">
-      <Filter>libCompression</Filter>
+      <Filter>Resource Files\libCompression</Filter>
     </None>
   </ItemGroup>
 </Project>

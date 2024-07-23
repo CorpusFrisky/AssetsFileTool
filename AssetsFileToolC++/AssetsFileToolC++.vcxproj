@@ -133,14 +133,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppContext.cpp" />
+    <ClCompile Include="AssetBundleFileFormat.cpp" />
+    <ClCompile Include="AssetBundleFileTable.cpp" />
+    <ClCompile Include="AssetContainerList.cpp" />
+    <ClCompile Include="AssetIterator.cpp" />
     <ClCompile Include="AssetsFileFormat.cpp" />
     <ClCompile Include="AssetsFileReader.cpp" />
     <ClCompile Include="AssetsFileTable.cpp" />
     <ClCompile Include="AssetsFileToolC++.cpp" />
     <ClCompile Include="AssetsReplacer.cpp" />
     <ClCompile Include="AssetTypeClass.cpp" />
+    <ClCompile Include="BundleReplacer.cpp" />
     <ClCompile Include="ClassDatabaseFile.cpp" />
     <ClCompile Include="FileContext.cpp" />
+    <ClCompile Include="FileContextInfo.cpp" />
     <ClCompile Include="FileOpenService.cpp" />
     <ClCompile Include="libCompression\lz4.c" />
     <ClCompile Include="libCompression\lz4dec.cpp" />
@@ -154,18 +161,26 @@
     <ClCompile Include="libCompression\Threads.c" />
     <ClCompile Include="libCompression\xxhash.c" />
     <ClCompile Include="libStringConverter\convert.cpp" />
+    <ClCompile Include="ResourceManagerFile.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppContext.h" />
+    <ClInclude Include="AssetBundleFileFormat.h" />
+    <ClInclude Include="AssetBundleFileTable.h" />
+    <ClInclude Include="AssetContainerList.h" />
+    <ClInclude Include="AssetIterator.h" />
     <ClInclude Include="AssetsFileFormat.h" />
     <ClInclude Include="AssetsFileFormatTypes.h" />
     <ClInclude Include="AssetsFileReader.h" />
     <ClInclude Include="AssetsFileTable.h" />
     <ClInclude Include="AssetsReplacer.h" />
     <ClInclude Include="AssetTypeClass.h" />
+    <ClInclude Include="BundleReplacer.h" />
     <ClInclude Include="ClassDatabaseFile.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="FileContext.h" />
+    <ClInclude Include="FileContextInfo.h" />
     <ClInclude Include="FileOpenService.h" />
     <ClInclude Include="inc\half.hpp" />
     <ClInclude Include="inc\LZMA\7zTypes.h" />
@@ -175,6 +190,7 @@
     <ClInclude Include="inc\LZMA\LzmaLib.h" />
     <ClInclude Include="inc\LZMA\Types.h" />
     <ClInclude Include="InternalAssetsReplacer.h" />
+    <ClInclude Include="InternalBundleReplacer.h" />
     <ClInclude Include="libCompression\7zTypes.h" />
     <ClInclude Include="libCompression\api.h" />
     <ClInclude Include="libCompression\Compiler.h" />
@@ -194,6 +210,7 @@
     <ClInclude Include="libCompression\Threads.h" />
     <ClInclude Include="libCompression\xxhash.h" />
     <ClInclude Include="libStringConverter\convert.h" />
+    <ClInclude Include="ResourceManagerFile.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

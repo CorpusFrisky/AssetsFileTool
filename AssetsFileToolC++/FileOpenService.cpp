@@ -35,7 +35,7 @@ int FileOpenService::execute()
 	if (tryAsAssets)*/
 	{
 		AssetsFileContext* pAssetsContext = new AssetsFileContext(filePath, pReader, readerIsModified);
-		EAssetsFileOpenStatus assetsOpenStatus = pAssetsContext->OpenInsideTask(true, 100, 200);
+		EAssetsFileOpenStatus assetsOpenStatus = pAssetsContext->OpenInsideTask(true);
 		if (assetsOpenStatus >= 0 && assetsOpenStatus != AssetsFileOpenStatus_Pend)
 		{
 			this->pFileContext = pAssetsContext;
