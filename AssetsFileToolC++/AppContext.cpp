@@ -4,89 +4,91 @@
 #include <tuple>
 #include <filesystem>
 #include "../libStringConverter/convert.h"
-//
-//AppContext::FileOpenTask::FileOpenTask(AppContext *pContext, std::shared_ptr<IAssetsReader> _pReader, bool readerIsModified, const std::string &path,
-//	unsigned int parentFileID, unsigned int directoryEntryIdx,
-//	bool tryAsBundle, bool tryAsAssets, bool tryAsResources, bool tryAsGeneric) :
-//	pContext(pContext), pReader(std::move(_pReader)), readerIsModified(readerIsModified), filePath(path), pFileContext(nullptr),
-//	parentFileID(parentFileID), directoryEntryIdx(directoryEntryIdx),
-//	tryAsBundle(tryAsBundle), tryAsAssets(tryAsAssets), tryAsResources(tryAsResources), tryAsGeneric(tryAsGeneric)
-//{
-//	name = "Open file: " + path;
-//}
-//void AppContext::FileOpenTask::setParentContextInfo(std::shared_ptr<BundleFileContextInfo> &pContextInfo)
-//{
-//	this->pParentContextInfo = pContextInfo;
-//}
-//const std::string &AppContext::FileOpenTask::getName()
-//{
-//	return name;
-//}
-//TaskResult AppContext::FileOpenTask::execute(TaskProgressManager &progressManager)
-//{
-//	//TODO (maybe) : make this task cancelable
-//	this->pFileContext = nullptr;
-//	this->bundleOpenStatus = (EBundleFileOpenStatus)0;
-//	this->assetsOpenStatus = (EAssetsFileOpenStatus)0;
-//	if (tryAsBundle)
-//	{
-//		progressManager.setProgressDesc("Opening as a bundle file");
-//		BundleFileContext *pBundleContext = new BundleFileContext(filePath, pReader, readerIsModified);
-//		EBundleFileOpenStatus bundleOpenStatus = pBundleContext->OpenInsideTask(&progressManager, 0, 200);
-//		if (bundleOpenStatus >= 0 && bundleOpenStatus != BundleFileOpenStatus_Pend)
-//		{
-//			progressManager.setProgress(200, 200);
-//			this->pFileContext = pBundleContext;
-//			this->bundleOpenStatus = bundleOpenStatus;
-//			return 1;
-//		}
-//		delete pBundleContext;
-//	}
-//	if (tryAsAssets)
-//	{
-//		progressManager.setProgressDesc("Opening as a .assets file");
-//		AssetsFileContext *pAssetsContext = new AssetsFileContext(filePath, pReader, readerIsModified);
-//		EAssetsFileOpenStatus assetsOpenStatus = pAssetsContext->OpenInsideTask(&progressManager, true, 100, 200);
-//		if (assetsOpenStatus >= 0 && assetsOpenStatus != AssetsFileOpenStatus_Pend)
-//		{
-//			progressManager.setProgress(200, 200);
-//			this->pFileContext = pAssetsContext;
-//			this->assetsOpenStatus = assetsOpenStatus;
-//			return 2;
-//		}
-//		delete pAssetsContext;
-//	}
-//	if (tryAsResources/* && ((filePath.size() >= 5 && !filePath.compare(filePath.size() - 5, std::string::npos, ".resS"))
-//		|| (filePath.size() >= 9 && !filePath.compare(filePath.size() - 9, std::string::npos, ".resource"))
-//		|| (filePath.size() >= 10 && !filePath.compare(filePath.size() - 10, std::string::npos, ".resources")))*/)
-//	{
-//		progressManager.setProgressDesc("Opening as a resources file");
-//		ResourcesFileContext *pResourcesContext = new ResourcesFileContext(filePath, pReader, readerIsModified);
-//		EResourcesFileOpenStatus resourcesOpenStatus = pResourcesContext->Open();
-//		if (resourcesOpenStatus >= 0)
-//		{
-//			progressManager.setProgress(200, 200);
-//			this->pFileContext = pResourcesContext;
-//			return 3;
-//		}
-//		delete pResourcesContext;
-//	}
-//	if (tryAsGeneric)
-//	{
-//		progressManager.setProgressDesc("Opening as a generic file");
-//		GenericFileContext *pGenericContext = new GenericFileContext(filePath, pReader, readerIsModified);
-//		EGenericFileOpenStatus genericOpenStatus = pGenericContext->Open();
-//		if (genericOpenStatus >= 0)
-//		{
-//			progressManager.setProgress(200, 200);
-//			this->pFileContext = pGenericContext;
-//			return 4;
-//		}
-//		delete pGenericContext;
-//	}
-//	this->pReader.reset();
-//	return -1;
-//}
+
+AppContext::FileOpenTask::FileOpenTask(AppContext *pContext, std::shared_ptr<IAssetsReader> _pReader, bool readerIsModified, const std::string &path,
+	unsigned int parentFileID, unsigned int directoryEntryIdx,
+	bool tryAsBundle, bool tryAsAssets, bool tryAsResources, bool tryAsGeneric) :
+	pContext(pContext), pReader(std::move(_pReader)), readerIsModified(readerIsModified), filePath(path), pFileContext(nullptr),
+	parentFileID(parentFileID), directoryEntryIdx(directoryEntryIdx),
+	tryAsBundle(tryAsBundle), tryAsAssets(tryAsAssets), tryAsResources(tryAsResources), tryAsGeneric(tryAsGeneric)
+{
+	this->bundleOpenStatus = (EBundleFileOpenStatus)0;
+	this->assetsOpenStatus = (EAssetsFileOpenStatus)0;
+	name = "Open file: " + path;
+}
+void AppContext::FileOpenTask::setParentContextInfo(std::shared_ptr<BundleFileContextInfo> &pContextInfo)
+{
+	this->pParentContextInfo = pContextInfo;
+}
+const std::string &AppContext::FileOpenTask::getName()
+{
+	return name;
+}
+int AppContext::FileOpenTask::execute()
+{
+	//TODO (maybe) : make this task cancelable
+	this->pFileContext = nullptr;
+	this->bundleOpenStatus = (EBundleFileOpenStatus)0;
+	this->assetsOpenStatus = (EAssetsFileOpenStatus)0;
+	if (tryAsBundle)
+	{
+		//progressManager.setProgressDesc("Opening as a bundle file");
+		BundleFileContext *pBundleContext = new BundleFileContext(filePath, pReader, readerIsModified);
+		EBundleFileOpenStatus bundleOpenStatus = pBundleContext->OpenInsideTask();
+		if (bundleOpenStatus >= 0 && bundleOpenStatus != BundleFileOpenStatus_Pend)
+		{
+			//progressManager.setProgress(200, 200);
+			this->pFileContext = pBundleContext;
+			this->bundleOpenStatus = bundleOpenStatus;
+			return 1;
+		}
+		delete pBundleContext;
+	}
+	if (tryAsAssets)
+	{
+		//progressManager.setProgressDesc("Opening as a .assets file");
+		AssetsFileContext *pAssetsContext = new AssetsFileContext(filePath, pReader, readerIsModified);
+		EAssetsFileOpenStatus assetsOpenStatus = pAssetsContext->OpenInsideTask(true);
+		if (assetsOpenStatus >= 0 && assetsOpenStatus != AssetsFileOpenStatus_Pend)
+		{
+			//progressManager.setProgress(200, 200);
+			this->pFileContext = pAssetsContext;
+			this->assetsOpenStatus = assetsOpenStatus;
+			return 2;
+		}
+		delete pAssetsContext;
+	}
+	if (tryAsResources/* && ((filePath.size() >= 5 && !filePath.compare(filePath.size() - 5, std::string::npos, ".resS"))
+		|| (filePath.size() >= 9 && !filePath.compare(filePath.size() - 9, std::string::npos, ".resource"))
+		|| (filePath.size() >= 10 && !filePath.compare(filePath.size() - 10, std::string::npos, ".resources")))*/)
+	{
+		//progressManager.setProgressDesc("Opening as a resources file");
+		ResourcesFileContext *pResourcesContext = new ResourcesFileContext(filePath, pReader, readerIsModified);
+		EResourcesFileOpenStatus resourcesOpenStatus = pResourcesContext->Open();
+		if (resourcesOpenStatus >= 0)
+		{
+			//progressManager.setProgress(200, 200);
+			this->pFileContext = pResourcesContext;
+			return 3;
+		}
+		delete pResourcesContext;
+	}
+	if (tryAsGeneric)
+	{
+		//progressManager.setProgressDesc("Opening as a generic file");
+		GenericFileContext *pGenericContext = new GenericFileContext(filePath, pReader, readerIsModified);
+		EGenericFileOpenStatus genericOpenStatus = pGenericContext->Open();
+		if (genericOpenStatus >= 0)
+		{
+			//progressManager.setProgress(200, 200);
+			this->pFileContext = pGenericContext;
+			return 4;
+		}
+		delete pGenericContext;
+	}
+	this->pReader.reset();
+	return -1;
+}
 
 AppContext::AppContext()
 	: maxFileID(0), lastError(0), autoDetectDependencies(true)
@@ -132,112 +134,113 @@ AppContext::~AppContext(void)
 //			new std::tuple<std::shared_ptr<BundleFileContextInfo::DecompressTask>,TaskResult>(pDecompressTask, result));
 //	}
 //}
-//bool AppContext::processMessage(EAppContextMsg message, void *args)
-//{
-//	switch (message)
-//	{
-//	case AppContextMsg_OnFileOpenFail:
-//		{
-//			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-//			this->OnFileOpenFail(*ppTask, (*ppTask)->logText);
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnFileOpenAsBundle:
-//		{
-//			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-//			FileOpenTask *_pTask = (*ppTask).get();
-//			this->OnFileOpenAsBundle(*ppTask, (BundleFileContext*)_pTask->pFileContext, _pTask->bundleOpenStatus, _pTask->parentFileID, _pTask->directoryEntryIdx);
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnFileOpenAsAssets:
-//		{
-//			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-//			FileOpenTask *_pTask = (*ppTask).get();
-//			this->OnFileOpenAsAssets(*ppTask, (AssetsFileContext*)_pTask->pFileContext, _pTask->assetsOpenStatus, _pTask->parentFileID, _pTask->directoryEntryIdx);
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnFileOpenAsResources:
-//		{
-//			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-//			FileOpenTask *_pTask = (*ppTask).get();
-//			this->OnFileOpenAsResources(*ppTask, (ResourcesFileContext*)_pTask->pFileContext, _pTask->parentFileID, _pTask->directoryEntryIdx);
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnFileOpenAsGeneric:
-//		{
-//			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
-//			FileOpenTask *_pTask = (*ppTask).get();
-//			this->OnFileOpenAsGeneric(*ppTask, (GenericFileContext*)_pTask->pFileContext, _pTask->parentFileID, _pTask->directoryEntryIdx);
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnContainersLoaded:
-//		{
-//			auto ppTask = (std::shared_ptr<AssetsFileContextInfo::ContainersTask>*)args;
-//			OnGenerateContainers((*ppTask)->getFileContextInfo());
-//			delete ppTask;
-//		}
-//		return true;
-//	case AppContextMsg_OnBundleDecompressed:
-//		{
-//			auto *pInfo = (std::tuple<std::shared_ptr<BundleFileContextInfo::DecompressTask>,TaskResult>*)args;
-//			auto pTask = std::get<0>(*pInfo);
-//			OnDecompressBundle(pTask.get(), std::get<1>(*pInfo));
-//			delete pInfo;
-//		}
-//		return true;
-//	case AppContextMsg_OnAssetChanged:
-//		{
-//			auto *pInfo = (std::tuple<unsigned int,pathid_t,bool>*)args;
-//			std::shared_lock contextInfoMapLock(this->contextInfoMapMutex);
-//			auto contextInfoIt = contextInfoByFileID.find(std::get<0>(*pInfo));
-//			if (contextInfoIt != contextInfoByFileID.end())
-//			{
-//				std::shared_ptr<AssetsFileContextInfo> pFile = std::dynamic_pointer_cast<AssetsFileContextInfo>(contextInfoIt->second);
-//				contextInfoMapLock.unlock();
-//				assert(pFile);
-//				if (pFile)
-//					OnChangeAsset(pFile.get(), std::get<1>(*pInfo), std::get<2>(*pInfo));
-//			}
-//			delete pInfo;
-//		}
-//		return true;
-//	case AppContextMsg_DoMainThreadCallback:
-//		{
-//			auto *pInfo = (std::tuple<void(*)(uintptr_t,uintptr_t), uintptr_t, uintptr_t>*)args;
-//			std::get<0>(*pInfo)(std::get<1>(*pInfo), std::get<2>(*pInfo));
-//			delete pInfo;
-//		}
-//		return true;
-//	case AppContextMsg_OnBundleEntryChanged:
-//		{
-//			auto *pInfo = (std::tuple<unsigned int,size_t>*)args;
-//			std::shared_lock contextInfoMapLock(this->contextInfoMapMutex);
-//			auto contextInfoIt = contextInfoByFileID.find(std::get<0>(*pInfo));
-//			if (contextInfoIt != contextInfoByFileID.end())
-//			{
-//				std::shared_ptr<BundleFileContextInfo> pFile = std::dynamic_pointer_cast<BundleFileContextInfo>(contextInfoIt->second);
-//				contextInfoMapLock.unlock();
-//				assert(pFile);
-//				if (pFile)
-//					OnChangeBundleEntry(pFile.get(), std::get<1>(*pInfo));
-//			}
-//			else
-//				contextInfoMapLock.unlock();
-//			delete pInfo;
-//		}
-//		return true;
-//	default:
-//#ifdef _DEBUG
-//		assert(false);
-//#endif
-//		return false;
-//	}
-//}
+bool AppContext::processMessage(EAppContextMsg message, void *args)
+{
+	switch (message)
+	{
+	case AppContextMsg_OnFileOpenFail:
+		{
+			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
+			//this->OnFileOpenFail(*ppTask, (*ppTask)->logText);
+			delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnFileOpenAsBundle:
+		{
+			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
+			FileOpenTask *_pTask = (*ppTask).get();
+			//this->OnFileOpenAsBundle(*ppTask, (BundleFileContext*)_pTask->pFileContext, _pTask->bundleOpenStatus, _pTask->parentFileID, _pTask->directoryEntryIdx);
+			delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnFileOpenAsAssets:
+		{
+			auto ppTask = (FileOpenTask**)args;
+			FileOpenTask *_pTask = *ppTask;
+			this->OnFileOpenAsAssets(*ppTask, (AssetsFileContext*)_pTask->pFileContext, _pTask->assetsOpenStatus, _pTask->parentFileID, _pTask->directoryEntryIdx);
+			// TODO: Figure out why this accesses bad memory and re-add
+			//delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnFileOpenAsResources:
+		{
+			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
+			FileOpenTask *_pTask = (*ppTask).get();
+			//this->OnFileOpenAsResources(*ppTask, (ResourcesFileContext*)_pTask->pFileContext, _pTask->parentFileID, _pTask->directoryEntryIdx);
+			delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnFileOpenAsGeneric:
+		{
+			auto ppTask = (std::shared_ptr<FileOpenTask>*)args;
+			FileOpenTask *_pTask = (*ppTask).get();
+			//this->OnFileOpenAsGeneric(*ppTask, (GenericFileContext*)_pTask->pFileContext, _pTask->parentFileID, _pTask->directoryEntryIdx);
+			delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnContainersLoaded:
+		{
+			auto ppTask = (std::shared_ptr<AssetsFileContextInfo::ContainersTask>*)args;
+			//OnGenerateContainers((*ppTask)->getFileContextInfo());
+			delete ppTask;
+		}
+		return true;
+	case AppContextMsg_OnBundleDecompressed:
+		{
+			auto *pInfo = (std::tuple<std::shared_ptr<BundleFileContextInfo::DecompressTask>,int>*)args;
+			auto pTask = std::get<0>(*pInfo);
+			//OnDecompressBundle(pTask.get(), std::get<1>(*pInfo));
+			delete pInfo;
+		}
+		return true;
+	case AppContextMsg_OnAssetChanged:
+		{
+			auto *pInfo = (std::tuple<unsigned int,pathid_t,bool>*)args;
+			std::shared_lock contextInfoMapLock(this->contextInfoMapMutex);
+			auto contextInfoIt = contextInfoByFileID.find(std::get<0>(*pInfo));
+			if (contextInfoIt != contextInfoByFileID.end())
+			{
+				std::shared_ptr<AssetsFileContextInfo> pFile = std::dynamic_pointer_cast<AssetsFileContextInfo>(contextInfoIt->second);
+				contextInfoMapLock.unlock();
+				assert(pFile);
+				if (pFile)
+					OnChangeAsset(pFile.get(), std::get<1>(*pInfo), std::get<2>(*pInfo));
+			}
+			delete pInfo;
+		}
+		return true;
+	case AppContextMsg_DoMainThreadCallback:
+		{
+			auto *pInfo = (std::tuple<void(*)(uintptr_t,uintptr_t), uintptr_t, uintptr_t>*)args;
+			std::get<0>(*pInfo)(std::get<1>(*pInfo), std::get<2>(*pInfo));
+			delete pInfo;
+		}
+		return true;
+	case AppContextMsg_OnBundleEntryChanged:
+		{
+			auto *pInfo = (std::tuple<unsigned int,size_t>*)args;
+			std::shared_lock contextInfoMapLock(this->contextInfoMapMutex);
+			auto contextInfoIt = contextInfoByFileID.find(std::get<0>(*pInfo));
+			if (contextInfoIt != contextInfoByFileID.end())
+			{
+				std::shared_ptr<BundleFileContextInfo> pFile = std::dynamic_pointer_cast<BundleFileContextInfo>(contextInfoIt->second);
+				contextInfoMapLock.unlock();
+				assert(pFile);
+				/*if (pFile)
+					OnChangeBundleEntry(pFile.get(), std::get<1>(*pInfo));*/
+			}
+			else
+				contextInfoMapLock.unlock();
+			delete pInfo;
+		}
+		return true;
+	default:
+#ifdef _DEBUG
+		assert(false);
+#endif
+		return false;
+	}
+}
 //void AppContext::OnDecompressBundle(BundleFileContextInfo::DecompressTask *pTask, TaskResult result)
 //{}
 //std::shared_ptr<FileContextInfo> AppContext::OnFileOpenAsBundle(std::shared_ptr<FileOpenTask> pTask, BundleFileContext *pContext, EBundleFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx)
@@ -252,7 +255,7 @@ AppContext::~AppContext(void)
 //	AddContextInfo(pInfo, directoryEntryIdx);
 //	return pInfo;
 //}
-std::shared_ptr<FileContextInfo> AppContext::OnFileOpenAsAssets(/*std::shared_ptr<FileOpenTask> pTask,*/ AssetsFileContext *pContext, EAssetsFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx)
+std::shared_ptr<FileContextInfo> AppContext::OnFileOpenAsAssets(FileOpenTask* pTask, AssetsFileContext *pContext, EAssetsFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx)
 {
 	AssetsFileContextInfo *pAssetsInfo = new AssetsFileContextInfo(pContext, 0, parentFileID);
 	std::shared_ptr<FileContextInfo> pInfo(pAssetsInfo);

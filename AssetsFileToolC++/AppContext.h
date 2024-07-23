@@ -35,32 +35,34 @@ class AppContext /*: TaskProgressCallback*/
 	std::unordered_multimap<std::string, std::shared_ptr<FileContextInfo>> contextInfoByFileName;
 	std::shared_mutex contextInfoMapMutex;
 	
-protected:
+public:
 	//PluginMapping plugins;
 
-	//class FileOpenTask : public ITask
-	//{
-	//	std::shared_ptr<BundleFileContextInfo> pParentContextInfo; //Only to maintain object lifetime (bundled files only).
+	class FileOpenTask
+	{
+		std::shared_ptr<BundleFileContextInfo> pParentContextInfo; //Only to maintain object lifetime (bundled files only).
 
-	//	AppContext *pContext;
-	//	std::shared_ptr<IAssetsReader> pReader; bool readerIsModified;
-	//	std::string filePath;
-	//	std::string name;
-	//	bool tryAsBundle, tryAsAssets, tryAsResources, tryAsGeneric;
-	//public:
-	//	EBundleFileOpenStatus bundleOpenStatus;
-	//	EAssetsFileOpenStatus assetsOpenStatus;
-	//	IFileContext *pFileContext;
-	//	std::string logText;
-	//	unsigned int parentFileID, directoryEntryIdx; //For bundled files
-	//	std::unique_ptr<class VisibleFileEntry> modificationsToApply; //Just carried by the task, so the open result event handler can use it later on.
-	//	FileOpenTask(AppContext *pContext, std::shared_ptr<IAssetsReader> pReader, bool readerIsModified, const std::string &path,
-	//		unsigned int parentFileID = 0, unsigned int directoryEntryIdx = 0, 
-	//		bool tryAsBundle=true, bool tryAsAssets=true, bool tryAsResources=true, bool tryAsGeneric=false);
-	//	void setParentContextInfo(std::shared_ptr<BundleFileContextInfo> &pParentContextInfo);
-	//	const std::string &getName();
-	//	TaskResult execute(TaskProgressManager &progressManager);
-	//};
+		AppContext *pContext;
+		std::shared_ptr<IAssetsReader> pReader; bool readerIsModified;
+		std::string filePath;
+		std::string name;
+		bool tryAsBundle, tryAsAssets, tryAsResources, tryAsGeneric;
+	public:
+		EBundleFileOpenStatus bundleOpenStatus;
+		EAssetsFileOpenStatus assetsOpenStatus;
+		IFileContext *pFileContext;
+		std::string logText;
+		unsigned int parentFileID, directoryEntryIdx; //For bundled files
+		std::unique_ptr<class VisibleFileEntry> modificationsToApply; //Just carried by the task, so the open result event handler can use it later on.
+		FileOpenTask(AppContext *pContext, std::shared_ptr<IAssetsReader> pReader, bool readerIsModified, const std::string &path,
+			unsigned int parentFileID = 0, unsigned int directoryEntryIdx = 0, 
+			bool tryAsBundle=true, bool tryAsAssets=true, bool tryAsResources=true, bool tryAsGeneric=false);
+		void setParentContextInfo(std::shared_ptr<BundleFileContextInfo> &pParentContextInfo);
+		const std::string &getName();
+		int execute();
+	};
+
+protected:
 
 	//void OnCompletion(std::shared_ptr<ITask> &pTask, TaskResult result);
 	//void OnGenerateContainers(AssetsFileContextInfo *info);
@@ -102,45 +104,45 @@ public:
 			new std::tuple<void(*)(uintptr_t, uintptr_t), uintptr_t, uintptr_t>{
 				&mainThreadCallbackDispatcher<TCallable>, reinterpret_cast<uintptr_t>(new TCallable(std::move(_callable))), param});
 	}*/
+	//Processes a message. Must be called by the main thread after a corresponding signalMainThread call.
+	/*virtual*/ bool processMessage(EAppContextMsg message, void* args);
 protected:
 	ClassDatabasePackage classPackage; //Do not change during runtime.
 	std::vector<std::shared_ptr<FileContextInfo>> contextInfo; //Only use on the main thread.
 	unsigned int maxFileID;
 	unsigned int lastError;
 	bool autoDetectDependencies; //Automatically assign the references of newly loaded and existing AssetsFileContextInfo.
-
-	//Processes a message. Must be called by the main thread after a corresponding signalMainThread call.
-	//virtual bool processMessage(EAppContextMsg message, void *args);
 	
 	//The following functions are called by processMessage.
 	//FileOpenTask / BundleEntryOpenTask done
-	virtual std::shared_ptr<FileContextInfo> OnFileOpenAsAssets(/*std::shared_ptr<FileOpenTask> pTask,*/ AssetsFileContext* pContext, EAssetsFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx);
+	virtual std::shared_ptr<FileContextInfo> OnFileOpenAsAssets(FileOpenTask* pTask, AssetsFileContext* pContext, EAssetsFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx);
 
 	/*virtual std::shared_ptr<FileContextInfo> OnFileOpenAsBundle(std::shared_ptr<FileOpenTask> pTask, BundleFileContext *pContext, EBundleFileOpenStatus openStatus, unsigned int parentFileID, unsigned int directoryEntryIdx);
 	virtual std::shared_ptr<FileContextInfo> OnFileOpenAsResources(std::shared_ptr<FileOpenTask> pTask, ResourcesFileContext *pContext, unsigned int parentFileID, unsigned int directoryEntryIdx);
 	virtual std::shared_ptr<FileContextInfo> OnFileOpenAsGeneric(std::shared_ptr<FileOpenTask> pTask, GenericFileContext *pContext, unsigned int parentFileID, unsigned int directoryEntryIdx);
 	virtual void OnFileOpenFail(std::shared_ptr<FileOpenTask> pTask, std::string &logText);*/
 	//AssetsFileContextInfo: ContainersTask done. First called for the assets file the ContainersTask was created for, and then for all dependencies of that assets file.
-	public: virtual void OnUpdateContainers(AssetsFileContextInfo *info);
+	public: 
+		/*virtual */void OnUpdateContainers(AssetsFileContextInfo *info);
 	//Called when an AssetsFileContextInfo reference has been resolved, or when the file name of an AssetsFile dependency entry has changed.
 	//Is not called for newly loaded files that have some of their dependencies resolved immediately.
-	virtual void OnUpdateDependencies(AssetsFileContextInfo *info, size_t from, size_t to); //from/to: indices for info->references
+	/*virtual */void OnUpdateDependencies(AssetsFileContextInfo *info, size_t from, size_t to); //from/to: indices for info->references
 protected:
 	//BundleFileContextInfo: DecompressTask done or failed.
 	//virtual void OnDecompressBundle(BundleFileContextInfo::DecompressTask *pTask, TaskResult result);
 	//Called whenever a replacer was added (adding, modifying or removing an asset). The caller holds a reference to pFile.
-	virtual void OnChangeAsset(AssetsFileContextInfo *pFile, pathid_t pathID, bool wasRemoved);
+	/*virtual */void OnChangeAsset(AssetsFileContextInfo *pFile, pathid_t pathID, bool wasRemoved);
 	//Called whenever a bundle entry was changed (renamed, reader overridden, removed). The caller holds a reference to pFile.
-	virtual void OnChangeBundleEntry(BundleFileContextInfo *pFile, size_t index);
+	/*virtual */void OnChangeBundleEntry(BundleFileContextInfo *pFile, size_t index);
 	
 	//Load the class database package. appBaseDir is the directory where UABE is located with a trailing path separator.
 	//Should be called early on, i.e. before any file contexts are opened.
 	//Can be overridden to override default loading behaviour (look for classdata.tpk in current dir and then in appBaseDir).
-	virtual bool LoadClassDatabasePackage(const std::string &appBaseDir, std::string &errorMessage);
+	/*virtual */bool LoadClassDatabasePackage(const std::string &appBaseDir, std::string &errorMessage);
 
 	//When inheriting this function, call AppContext::AddContextInfo() first to initialize the fileID (and to insert it into the AppContext lists)!
-	virtual bool AddContextInfo(std::shared_ptr<FileContextInfo> &info, unsigned int directoryEntryIdx);
-	virtual void RemoveContextInfo(FileContextInfo *info);
+	/*virtual */bool AddContextInfo(std::shared_ptr<FileContextInfo> &info, unsigned int directoryEntryIdx);
+	/*virtual */void RemoveContextInfo(FileContextInfo *info);
 	
 	//Call from the main (e.g. UI) thread only.
 	//std::shared_ptr<ITask> CreateBundleEntryOpenTask(std::shared_ptr<BundleFileContextInfo> &pBundleContextInfo, unsigned int directoryEntryIdx);
@@ -170,26 +172,26 @@ public:
 
 	//virtual bool ShowAssetBatchImportDialog(IAssetBatchImportDesc* pDesc, std::string basePath)=0;
 
-	//Asks the user to provide an export file or directory path. An empty string signals cancelling the action.
-	// -> If assets.size() == 0, returns an empty string.
-	// -> If assets.size() == 1, the user is asked to select one output file path.
-	// -> If assets.size() >  1, the user is asked to select an output directory.
-	//Assumes that all AssetIdentifiers in assets are resolved.
-	virtual std::string QueryAssetExportLocation(const std::vector<struct AssetUtilDesc>& assets,
-		const std::string &extension, const std::string &extensionFilter) = 0;
+	////Asks the user to provide an export file or directory path. An empty string signals cancelling the action.
+	//// -> If assets.size() == 0, returns an empty string.
+	//// -> If assets.size() == 1, the user is asked to select one output file path.
+	//// -> If assets.size() >  1, the user is asked to select an output directory.
+	////Assumes that all AssetIdentifiers in assets are resolved.
+	//virtual std::string QueryAssetExportLocation(const std::vector<struct AssetUtilDesc>& assets,
+	//	const std::string &extension, const std::string &extensionFilter) = 0;
 
-	//Asks the user to provide an import file or directory path. An empty return value signals cancelling the action.
-	//The user may possibly change the set of assets to actually import.
-	//The returned vector indices correspond to the indices in the (potentially modified) assets vector.
-	// -> If assets.size() == 0, returns an empty vector.
-	// -> If assets.size() == 1, the user is asked to select one file from the filesystem.
-	// -> If assets.size() >  1, the user is asked to select an input directory and a batch import dialog is shown.
-	//Assumes all assets have resolved AssetIdentifiers already.
-	virtual std::vector<std::string> QueryAssetImportLocation(std::vector<AssetUtilDesc>& assets,
-		std::string extension, std::string extensionRegex, std::string extensionFilter) = 0;
+	////Asks the user to provide an import file or directory path. An empty return value signals cancelling the action.
+	////The user may possibly change the set of assets to actually import.
+	////The returned vector indices correspond to the indices in the (potentially modified) assets vector.
+	//// -> If assets.size() == 0, returns an empty vector.
+	//// -> If assets.size() == 1, the user is asked to select one file from the filesystem.
+	//// -> If assets.size() >  1, the user is asked to select an input directory and a batch import dialog is shown.
+	////Assumes all assets have resolved AssetIdentifiers already.
+	//virtual std::vector<std::string> QueryAssetImportLocation(std::vector<AssetUtilDesc>& assets,
+	//	std::string extension, std::string extensionRegex, std::string extensionFilter) = 0;
 
 	AppContext();
-	virtual ~AppContext();
+	/*virtual*/ ~AppContext();
 
 	/*inline const PluginMapping& getPlugins()
 	{
