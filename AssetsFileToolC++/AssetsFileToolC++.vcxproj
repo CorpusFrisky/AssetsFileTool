@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{52bc0f12-1508-448c-ad35-46dc2960e9cd}</ProjectGuid>
+    <RootNamespace>AssetsFileToolC</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AllProjectIncludesArePublic>true</AllProjectIncludesArePublic>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;ASSETSTOOLS_IMPORTSTATIC;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\17046\source\repos\AssetsFileToolC++\AssetsFileToolC++\libStringConverter;C:\Users\17046\source\repos\AssetsFileToolC++\AssetsFileToolC++\inc;C:\Users\17046\source\repos\AssetsFileToolC++\AssetsFileToolC++\libCompression;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AssetsFileFormat.cpp" />
+    <ClCompile Include="AssetsFileReader.cpp" />
+    <ClCompile Include="AssetsFileTable.cpp" />
+    <ClCompile Include="AssetsFileToolC++.cpp" />
+    <ClCompile Include="AssetsReplacer.cpp" />
+    <ClCompile Include="AssetTypeClass.cpp" />
+    <ClCompile Include="ClassDatabaseFile.cpp" />
+    <ClCompile Include="FileContext.cpp" />
+    <ClCompile Include="FileOpenService.cpp" />
+    <ClCompile Include="libCompression\lz4.c" />
+    <ClCompile Include="libCompression\lz4dec.cpp" />
+    <ClCompile Include="libCompression\lz4enc.cpp" />
+    <ClCompile Include="libCompression\lz4frame.c" />
+    <ClCompile Include="libCompression\lz4hc.c" />
+    <ClCompile Include="libCompression\LzFind.c" />
+    <ClCompile Include="libCompression\LzFindMt.c" />
+    <ClCompile Include="libCompression\LzmaDec.c" />
+    <ClCompile Include="libCompression\LzmaEnc.c" />
+    <ClCompile Include="libCompression\Threads.c" />
+    <ClCompile Include="libCompression\xxhash.c" />
+    <ClCompile Include="libStringConverter\convert.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssetsFileFormat.h" />
+    <ClInclude Include="AssetsFileFormatTypes.h" />
+    <ClInclude Include="AssetsFileReader.h" />
+    <ClInclude Include="AssetsFileTable.h" />
+    <ClInclude Include="AssetsReplacer.h" />
+    <ClInclude Include="AssetTypeClass.h" />
+    <ClInclude Include="ClassDatabaseFile.h" />
+    <ClInclude Include="defines.h" />
+    <ClInclude Include="FileContext.h" />
+    <ClInclude Include="FileOpenService.h" />
+    <ClInclude Include="inc\half.hpp" />
+    <ClInclude Include="inc\LZMA\7zTypes.h" />
+    <ClInclude Include="inc\LZMA\api.h" />
+    <ClInclude Include="inc\LZMA\LzmaDec.h" />
+    <ClInclude Include="inc\LZMA\LzmaEnc.h" />
+    <ClInclude Include="inc\LZMA\LzmaLib.h" />
+    <ClInclude Include="inc\LZMA\Types.h" />
+    <ClInclude Include="InternalAssetsReplacer.h" />
+    <ClInclude Include="libCompression\7zTypes.h" />
+    <ClInclude Include="libCompression\api.h" />
+    <ClInclude Include="libCompression\Compiler.h" />
+    <ClInclude Include="libCompression\lz4.h" />
+    <ClInclude Include="libCompression\lz4dec.h" />
+    <ClInclude Include="libCompression\lz4e.h" />
+    <ClInclude Include="libCompression\lz4enc.h" />
+    <ClInclude Include="libCompression\lz4frame.h" />
+    <ClInclude Include="libCompression\lz4frame_static.h" />
+    <ClInclude Include="libCompression\lz4hc.h" />
+    <ClInclude Include="libCompression\LzFind.h" />
+    <ClInclude Include="libCompression\LzFindMt.h" />
+    <ClInclude Include="libCompression\LzHash.h" />
+    <ClInclude Include="libCompression\LzmaDec.h" />
+    <ClInclude Include="libCompression\LzmaEnc.h" />
+    <ClInclude Include="libCompression\Precomp.h" />
+    <ClInclude Include="libCompression\Threads.h" />
+    <ClInclude Include="libCompression\xxhash.h" />
+    <ClInclude Include="libStringConverter\convert.h" />
+    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libCompression\CMakeLists.txt" />
+    <Text Include="libStringConverter\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libCompression\lz4_LICENSE" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
