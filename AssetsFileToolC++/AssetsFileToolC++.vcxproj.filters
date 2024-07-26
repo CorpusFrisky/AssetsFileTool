@@ -120,6 +120,18 @@
     <ClCompile Include="FileModTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileEntryUIInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextAsset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPluginUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libCompression\7zTypes.h">
@@ -264,6 +276,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileModTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileEntryUIInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPluginUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

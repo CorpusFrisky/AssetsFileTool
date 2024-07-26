@@ -138,6 +138,7 @@
     <ClCompile Include="AssetBundleFileTable.cpp" />
     <ClCompile Include="AssetContainerList.cpp" />
     <ClCompile Include="AssetIterator.cpp" />
+    <ClCompile Include="AssetPluginUtil.cpp" />
     <ClCompile Include="AssetsFileFormat.cpp" />
     <ClCompile Include="AssetsFileReader.cpp" />
     <ClCompile Include="AssetsFileTable.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="ClassDatabaseFile.cpp" />
     <ClCompile Include="FileContext.cpp" />
     <ClCompile Include="FileContextInfo.cpp" />
+    <ClCompile Include="FileEntryUIInfo.cpp" />
     <ClCompile Include="FileModTree.cpp" />
     <ClCompile Include="FileOpenService.cpp" />
     <ClCompile Include="libCompression\lz4.c" />
@@ -164,6 +166,8 @@
     <ClCompile Include="libStringConverter\convert.cpp" />
     <ClCompile Include="ResourceManagerFile.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="TextAsset.cpp" />
+    <ClCompile Include="WindowFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppContext.h" />
@@ -171,6 +175,7 @@
     <ClInclude Include="AssetBundleFileTable.h" />
     <ClInclude Include="AssetContainerList.h" />
     <ClInclude Include="AssetIterator.h" />
+    <ClInclude Include="AssetPluginUtil.h" />
     <ClInclude Include="AssetsFileFormat.h" />
     <ClInclude Include="AssetsFileFormatTypes.h" />
     <ClInclude Include="AssetsFileReader.h" />
@@ -182,6 +187,7 @@
     <ClInclude Include="defines.h" />
     <ClInclude Include="FileContext.h" />
     <ClInclude Include="FileContextInfo.h" />
+    <ClInclude Include="FileEntryUIInfo.h" />
     <ClInclude Include="FileModTree.h" />
     <ClInclude Include="FileOpenService.h" />
     <ClInclude Include="inc\half.hpp" />
@@ -214,6 +220,7 @@
     <ClInclude Include="libStringConverter\convert.h" />
     <ClInclude Include="ResourceManagerFile.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="WindowFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="libCompression\CMakeLists.txt" />

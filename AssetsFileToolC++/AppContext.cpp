@@ -261,7 +261,7 @@ std::shared_ptr<FileContextInfo> AppContext::OnFileOpenAsAssets(FileOpenTask* pT
 	std::shared_ptr<FileContextInfo> pInfo(pAssetsInfo);
 
 	//Apply all AssetsReplacers for this file from a VisibleFileEntry, if existent.
-	/*for (size_t i = 0; pTask->modificationsToApply && i < pTask->modificationsToApply->replacers.size(); ++i)
+	for (size_t i = 0; pTask->modificationsToApply && i < pTask->modificationsToApply->replacers.size(); ++i)
 	{
 		std::shared_ptr<GenericReplacer> &pGenericReplacer = pTask->modificationsToApply->replacers[i].pReplacer;
 		if (std::shared_ptr<AssetsReplacer> pAssetsReplacer = std::dynamic_pointer_cast<AssetsReplacer>(pGenericReplacer))
@@ -282,7 +282,7 @@ std::shared_ptr<FileContextInfo> AppContext::OnFileOpenAsAssets(FileOpenTask* pT
 				pAssetsInfo->setDependenciesChanged();
 			}
 		}
-	}*/
+	}
 
 	AddContextInfo(pInfo, directoryEntryIdx);
 	return pInfo;

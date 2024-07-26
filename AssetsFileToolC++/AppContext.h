@@ -31,11 +31,13 @@ enum EAppContextMsg
 #define AppContextErr_FileNotFound 1
 class AppContext /*: TaskProgressCallback*/
 {
-	std::unordered_map<unsigned int, std::shared_ptr<FileContextInfo>> contextInfoByFileID;
+	//std::unordered_map<unsigned int, std::shared_ptr<FileContextInfo>> contextInfoByFileID;
 	std::unordered_multimap<std::string, std::shared_ptr<FileContextInfo>> contextInfoByFileName;
 	std::shared_mutex contextInfoMapMutex;
 	
 public:
+	std::unordered_map<unsigned int, std::shared_ptr<FileContextInfo>> contextInfoByFileID;
+
 	//PluginMapping plugins;
 
 	class FileOpenTask
