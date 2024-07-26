@@ -42,23 +42,22 @@ int main() {
         Free_AssetsReader);
 
     AppContext* pAppContext = new AppContext();
+
+    fs::path classDbDirectory = "C:\\Users\\17046\\source\\repos\\AssetsFileToolC++\\";
+    std::string classDbDirectoryStr = classDbDirectory.string();
+    std::string loadErrorMessage;
+    pAppContext->LoadClassDatabasePackage(classDbDirectoryStr, loadErrorMessage);
+
     AppContext::FileOpenTask* task = new AppContext::FileOpenTask(pAppContext, pReader, false, pFilePath);
     task->execute();
     pAppContext->processMessage(AppContextMsg_OnFileOpenAsAssets, &task);
 
-    std::shared_ptr<FileContextInfo> pFileContextInfo = pAppContext->contextInfoByFileID[1];
+    std::shared_ptr<FileContextInfo> pFileContextInfo = pAppContext->contextInfoByFileID[1];    
     AssetsFileContextInfo* pAssetsFileContextInfo = reinterpret_cast<AssetsFileContextInfo*>(pFileContextInfo.get());
+    pAssetsFileContextInfo->FindClassDatabase(pAppContext->classPackage);
     std::shared_ptr<AssetsFileContextInfo> pInfo(pAssetsFileContextInfo);
 
     AssetsFileTable* pAssetsFileTable = pInfo->getAssetsFileContext()->getAssetsFileTable();
-
-    /*AssetsFileContextInfo::ContainersTask* pConTask = new AssetsFileContextInfo::ContainersTask(*pAppContext, pInfo);
-    pConTask->execute();*/
-    //VisibleFileEntry* vfe = new VisibleFileEntry(*pAppContext, pInfo);
-
-    /*AssetIdentifier* ai = new AssetIdentifier(pInfo, pAssetsFileTable->getAssetInfo(1));
-    AssetIdentifier* ai = new AssetIdentifier(pInfo, 123);
-    ai->resolve(*pAppContext);*/
 
     WindowFunctions* wf = new WindowFunctions();
     std::vector<WindowFunctions::ListEntry> listEntries;
@@ -73,30 +72,10 @@ int main() {
         audEntries.push_back(aud);  
     }
 
-    fs::path outFilePath = downloadPath / "sharedassets0-reliable_shop_v1.1.txt";
+    fs::path outFilePath = downloadPath / "testExport2.xml";
     std::string exportLocation = outFilePath.string();
-    //std::string exportLocation = appContext.QueryAssetExportLocation(selection, ".txt", "*.txt|Text file:");
-    /*if (!exportLocation.empty())
-    {
-        auto pExportTask = TextAssetExportTask(*pAppContext, std::move(selection), std::move(exportLocation));
-        pExportTask.execute();
-    }*/
-
-    /*AppContext& appContext;
-    std::vector<AssetUtilDesc> selection;
-public:
-    Runner(AppContext & appContext, std::vector<AssetUtilDesc> _selection)
-        : appContext(appContext), selection(std::move(_selection))
-    {}
-    void operator()()
-    {
-        std::string exportLocation = appContext.QueryAssetExportLocation(selection, ".txt", "*.txt|Text file:");
-        if (!exportLocation.empty())
-        {
-            auto pTask = std::make_shared<TextAssetExportTask>(appContext, std::move(selection), std::move(exportLocation));
-            appContext.taskManager.enqueue(pTask);
-        }
-    }*/
+    TextAssetExportTask* pExportTask = new TextAssetExportTask(*pAppContext, audEntries, "");
+    pExportTask->exportAsset(audEntries[123], exportLocation);
 
     return 0;
 }

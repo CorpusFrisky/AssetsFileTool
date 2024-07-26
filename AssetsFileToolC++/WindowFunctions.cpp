@@ -368,7 +368,8 @@ bool WindowFunctions::TryRetrieveAssetNameField(AppContext* pContext, AssetsFile
 
 				uint32_t origChildCount = (uint32_t)pNameTypeValue->templateBase.children.size();
 				std::vector<AssetTypeTemplateField> childrenTmp = std::move(pNameTypeValue->templateBase.children);
-				pNameTypeValue->templateBase.children.assign(childrenTmp.begin(), childrenTmp.begin() + (pNameTypeValue->nameChildIdx + 1));
+				if(origChildCount > 0)
+					pNameTypeValue->templateBase.children.assign(childrenTmp.begin(), childrenTmp.begin() + (pNameTypeValue->nameChildIdx + 1));
 				bool bigEndian = false;
 				pContextInfo->getEndianness(bigEndian);
 				AssetTypeInstance instance(1, &pTemplateBase, identifier->getDataSize(), pReader.get(), bigEndian);

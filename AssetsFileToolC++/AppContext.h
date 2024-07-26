@@ -108,8 +108,8 @@ public:
 	}*/
 	//Processes a message. Must be called by the main thread after a corresponding signalMainThread call.
 	/*virtual*/ bool processMessage(EAppContextMsg message, void* args);
-protected:
 	ClassDatabasePackage classPackage; //Do not change during runtime.
+protected:
 	std::vector<std::shared_ptr<FileContextInfo>> contextInfo; //Only use on the main thread.
 	unsigned int maxFileID;
 	unsigned int lastError;
@@ -124,11 +124,13 @@ protected:
 	virtual std::shared_ptr<FileContextInfo> OnFileOpenAsGeneric(std::shared_ptr<FileOpenTask> pTask, GenericFileContext *pContext, unsigned int parentFileID, unsigned int directoryEntryIdx);
 	virtual void OnFileOpenFail(std::shared_ptr<FileOpenTask> pTask, std::string &logText);*/
 	//AssetsFileContextInfo: ContainersTask done. First called for the assets file the ContainersTask was created for, and then for all dependencies of that assets file.
-	public: 
+public: 
 		/*virtual */void OnUpdateContainers(AssetsFileContextInfo *info);
 	//Called when an AssetsFileContextInfo reference has been resolved, or when the file name of an AssetsFile dependency entry has changed.
 	//Is not called for newly loaded files that have some of their dependencies resolved immediately.
 	/*virtual */void OnUpdateDependencies(AssetsFileContextInfo *info, size_t from, size_t to); //from/to: indices for info->references
+	/*virtual */bool LoadClassDatabasePackage(const std::string& appBaseDir, std::string& errorMessage);
+
 protected:
 	//BundleFileContextInfo: DecompressTask done or failed.
 	//virtual void OnDecompressBundle(BundleFileContextInfo::DecompressTask *pTask, TaskResult result);
@@ -140,7 +142,6 @@ protected:
 	//Load the class database package. appBaseDir is the directory where UABE is located with a trailing path separator.
 	//Should be called early on, i.e. before any file contexts are opened.
 	//Can be overridden to override default loading behaviour (look for classdata.tpk in current dir and then in appBaseDir).
-	/*virtual */bool LoadClassDatabasePackage(const std::string &appBaseDir, std::string &errorMessage);
 
 	//When inheriting this function, call AppContext::AddContextInfo() first to initialize the fileID (and to insert it into the AppContext lists)!
 	/*virtual */bool AddContextInfo(std::shared_ptr<FileContextInfo> &info, unsigned int directoryEntryIdx);
