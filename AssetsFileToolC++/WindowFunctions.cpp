@@ -432,3 +432,12 @@ WindowFunctions::AssetInfo* WindowFunctions::getAssetInfo(AssetIdentifier* ident
 
 	return info;
 }
+
+void WindowFunctions::onSaveFileRequest(AppContext* pAppContext, FileContextInfo* pContextInfo, std::string saveFilePath)
+{
+	std::wstring saveFilePathWideStr = std::wstring(saveFilePath.begin(), saveFilePath.end());
+	IAssetsWriter* pWriter = Create_AssetsWriterToFile(saveFilePathWideStr.c_str(), true, true, RWOpenFlags_Immediately);
+
+	uint64_t size = pContextInfo->write(*pAppContext, pWriter, 0, true);
+	Free_AssetsWriter(pWriter);
+}

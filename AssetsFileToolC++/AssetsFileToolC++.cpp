@@ -37,6 +37,8 @@ int main() {
     std::string filePathStr = filePath.string();
     const char* pFilePath = filePathStr.c_str();
 
+    fs::path testDirStr = "C:\\Users\\Public\\TextAssetTestDir";
+
     std::shared_ptr<IAssetsReader> pReader = std::shared_ptr<IAssetsReader>(
         Create_AssetsReaderFromFile(pFilePath, true, RWOpenFlags_Immediately),
         Free_AssetsReader);
@@ -72,10 +74,29 @@ int main() {
         audEntries.push_back(aud);  
     }
 
-    fs::path outFilePath = downloadPath / "testExport2.xml";
-    std::string exportLocation = outFilePath.string();
-    TextAssetExportTask* pExportTask = new TextAssetExportTask(*pAppContext, audEntries, "");
-    pExportTask->exportAsset(audEntries[123], exportLocation);
+    std::vector<std::string> importFilePaths;
+    std::vector<AssetUtilDesc> textAssetAudEntries;
+	for (int i = 0; i < audEntries.size(); i++)
+	{
+		std::cout << std::format("Processing {}\n", i);
+		AssetUtilDesc aud = audEntries[i];
+		if (aud.asset.pAssetInfo &&
+			aud.asset.pAssetInfo->curFileType == 49) //TextAsset
+		{
+			fs::path outFilePath = testDirStr / std::format("{}.txt", aud.assetName);
+			std::string exportLocation = outFilePath.string();
+			importFilePaths.push_back(exportLocation);
+			textAssetAudEntries.push_back(aud);
+			TextAssetExportTask* pExportTask = new TextAssetExportTask(*pAppContext, audEntries, "");
+			pExportTask->exportAsset(aud, exportLocation);
+		}
+	}
+    
+    TextAssetImportTask* pImportTask = new TextAssetImportTask(*pAppContext, textAssetAudEntries, importFilePaths);
+    pImportTask->execute();
+
+    fs::path importFilePath = downloadPath / "sharedassets0-import_test_v1.1.assets";
+    wf->onSaveFileRequest(pAppContext, pFileContextInfo.get(), importFilePath.string());
 
     return 0;
 }

@@ -262,27 +262,27 @@ public:
 //			return importFilePaths[i];
 //	}
 //};
-//
-//class AssetImportTask : public ITask
-//{
-//	std::vector<AssetUtilDesc> assets;
-//	std::vector<std::string> importFilePaths;
-//	std::string taskName;
-//	bool stopOnError;
-//public:
-//	//If assets.size() == 1, baseDir will be used as the full path for the asset.
-//	//Otherwise, the output paths will be generated via AssetUtilDesc::makeExportFilePath(..).
-//	//extension: File extension, e.g. ".dat", or "" for no extension.
-//	AssetImportTask(std::vector<AssetUtilDesc> assets, std::vector<std::string> importFilePaths,
-//		std::string taskName, bool stopOnError = false);
-//	const std::string& getName();
-//	TaskResult execute(TaskProgressManager& progressManager);
-//	//Can be called directly, without a preceding execute call.
-//	//asset: Asset to export (not required to be within the assets vector).
-//	//path: Output file path.
-//	virtual bool importAsset(AssetUtilDesc& asset, std::string path, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager = {}) = 0;
-//};
-//
+
+class AssetImportTask
+{
+	std::vector<AssetUtilDesc> assets;
+	std::vector<std::string> importFilePaths;
+	std::string taskName;
+	bool stopOnError;
+public:
+	//If assets.size() == 1, baseDir will be used as the full path for the asset.
+	//Otherwise, the output paths will be generated via AssetUtilDesc::makeExportFilePath(..).
+	//extension: File extension, e.g. ".dat", or "" for no extension.
+	AssetImportTask(std::vector<AssetUtilDesc> assets, std::vector<std::string> importFilePaths,
+		std::string taskName, bool stopOnError = false);
+	const std::string& getName();
+	int execute();
+	//Can be called directly, without a preceding execute call.
+	//asset: Asset to export (not required to be within the assets vector).
+	//path: Output file path.
+	virtual bool importAsset(AssetUtilDesc& asset, std::string path/*, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager = {}*/) = 0;
+};
+
 //class AssetImportRawTask : public AssetImportTask
 //{
 //	AppContext& appContext;
@@ -290,9 +290,9 @@ public:
 //	AssetImportRawTask(AppContext& appContext,
 //		std::vector<AssetUtilDesc> assets, std::vector<std::string> importFilePaths,
 //		std::string taskName, bool stopOnError = false);
-//	bool importAsset(AssetUtilDesc& asset, std::string path, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager = {});
+//	bool importAsset(AssetUtilDesc& asset, std::string path/*, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager = {}*/);
 //};
-//
+
 //class AssetImportDumpTask : public AssetImportTask
 //{
 //	AppContext& appContext;

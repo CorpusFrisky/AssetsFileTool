@@ -7,7 +7,7 @@
 #include <codecvt>
 #include <filesystem>
 #include <chrono>
-#include <format>
+#include <format>	
 
 std::string AssetUtilDesc::makeExportFilePath(std::unordered_map<std::string, size_t>& nameCountBuffer,
 	const std::string &extension, std::string baseDir) const
@@ -875,59 +875,59 @@ void AssetExportJSONDumpTask::recursiveDumpAsset(IAssetsReader* pReader, AssetTy
 //	filenameOverride.clear();
 //	return false;
 //}
-//
-//AssetImportTask::AssetImportTask(std::vector<AssetUtilDesc> _assets, std::vector<std::string> _importFilePaths,
-//		std::string _taskName, bool stopOnError)
-//	: assets(std::move(_assets)), importFilePaths(std::move(_importFilePaths)),
-//	taskName(std::move(_taskName)), stopOnError(stopOnError)
-//{
-//	if (assets.size() != importFilePaths.size())
-//		throw std::invalid_argument("AssetImportTask: assets and importFilePaths should have matching numbers of elements!");
-//}
-//const std::string& AssetImportTask::getName()
-//{
-//	return taskName;
-//}
-//TaskResult AssetImportTask::execute(TaskProgressManager& progressManager)
-//{
-//	unsigned int progressRange = static_cast<unsigned int>(std::max<size_t>(std::min<size_t>(assets.size(), 10000), 1));
-//	size_t assetsPerProgressStep = assets.size() / progressRange;
-//	constexpr size_t assetsPerDescUpdate = 8;
-//	progressManager.setCancelable();
-//	progressManager.setProgress(0, progressRange);
-//	auto lastDescTime = std::chrono::high_resolution_clock::time_point::min();
-//	bool encounteredErrors = false;
-//	for (size_t i = 0; i < assets.size(); ++i)
-//	{
-//		if (progressManager.isCanceled())
-//			return TaskResult_Canceled;
-//		if ((i % assetsPerProgressStep) == 0)
-//			progressManager.setProgress((unsigned int)(i / assetsPerProgressStep), progressRange);
-//		auto curTime = std::chrono::high_resolution_clock::now();
-//		if (std::chrono::duration_cast<std::chrono::milliseconds>(curTime - lastDescTime).count() >= 500)
-//		{
-//			progressManager.setProgressDesc(std::format("Importing {}/{}", (i + 1), assets.size()));
-//			lastDescTime = curTime;
-//		}
-//		try {
-//			bool result = (importFilePaths[i].empty() || importAsset(assets[i], importFilePaths[i], progressManager));
-//			if (!result && stopOnError)
-//				return (TaskResult)-1;
-//			if (!result)
-//				encounteredErrors = true;
-//		}
-//		catch (AssetUtilError err) {
-//			progressManager.logMessage(std::format(
-//				"Error importing an asset (File ID {0}, Path ID {1}): {2}",
-//				assets[i].asset.fileID, (int64_t)assets[i].asset.pathID, err.what()));
-//			if (err.getMayStop() && stopOnError)
-//				return (TaskResult)-1;
-//			encounteredErrors = true;
-//		}
-//	}
-//	return (TaskResult)(encounteredErrors ? -2 : 0);
-//}
-//
+
+AssetImportTask::AssetImportTask(std::vector<AssetUtilDesc> _assets, std::vector<std::string> _importFilePaths,
+		std::string _taskName, bool stopOnError)
+	: assets(std::move(_assets)), importFilePaths(std::move(_importFilePaths)),
+	taskName(std::move(_taskName)), stopOnError(stopOnError)
+{
+	if (assets.size() != importFilePaths.size())
+		throw std::invalid_argument("AssetImportTask: assets and importFilePaths should have matching numbers of elements!");
+}
+const std::string& AssetImportTask::getName()
+{
+	return taskName;
+}	
+int AssetImportTask::execute()
+{
+	unsigned int progressRange = static_cast<unsigned int>(std::max<size_t>(std::min<size_t>(assets.size(), 10000), 1));
+	size_t assetsPerProgressStep = assets.size() / progressRange;
+	constexpr size_t assetsPerDescUpdate = 8;
+	/*progressManager.setCancelable();
+	progressManager.setProgress(0, progressRange);*/
+	auto lastDescTime = std::chrono::high_resolution_clock::time_point::min();
+	bool encounteredErrors = false;
+	for (size_t i = 0; i < assets.size(); ++i)
+	{
+		/*if (progressManager.isCanceled())
+			return TaskResult_Canceled;*/
+		/*if ((i % assetsPerProgressStep) == 0)
+			progressManager.setProgress((unsigned int)(i / assetsPerProgressStep), progressRange);*/
+		auto curTime = std::chrono::high_resolution_clock::now();
+		if (std::chrono::duration_cast<std::chrono::milliseconds>(curTime - lastDescTime).count() >= 500)
+		{
+			//progressManager.setProgressDesc(std::format("Importing {}/{}", (i + 1), assets.size()));
+			lastDescTime = curTime;
+		}
+		try {
+			bool result = (importFilePaths[i].empty() || importAsset(assets[i], importFilePaths[i]/*, progressManager*/));
+			if (!result && stopOnError)
+				return /*(TaskResult)*/-1;
+			if (!result)
+				encounteredErrors = true;
+		}
+		catch (AssetUtilError err) {
+			/*progressManager.logMessage(std::format(
+				"Error importing an asset (File ID {0}, Path ID {1}): {2}",
+				assets[i].asset.fileID, (int64_t)assets[i].asset.pathID, err.what()));*/
+			if (err.getMayStop() && stopOnError)
+				return /*(TaskResult)*/-1;
+			encounteredErrors = true;
+		}
+	}
+	return /*(TaskResult)*/(encounteredErrors ? -2 : 0);
+}
+
 //static void Free_AssetsWriterToMemory_Delete(void* buffer)
 //{
 //	if (buffer)

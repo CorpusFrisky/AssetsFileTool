@@ -65,5 +65,5 @@ public:
 	AssetUtilDesc makeExportDescForSelection(size_t selection, std::vector<ListEntry> listEntries, FileContextInfo_ptr pContextInfo,
 		AppContext* pAppContext, AssetIdentifier* identifier, AssetsFileContextInfo* pAssetFileContextInfo);
 	AssetInfo* getAssetInfo(AssetIdentifier* identifier, AppContext* pContext, AssetsFileContextInfo* pContextInfo, pathid_t pathID);
-
+	void onSaveFileRequest(AppContext* pAppContext, FileContextInfo* pContextInfo, std::string saveFilePath);
 };

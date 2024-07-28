@@ -52,86 +52,86 @@ static void SubstituteTextAssetStringType(AssetTypeTemplateField& templateBase)
 		}
 	}
 }
-//
-//static void FreeByteBufCallback(void* buffer)
-//{
-//	if (buffer)
-//		delete[](uint8_t*)buffer;
-//}
-//
-//class TextAssetImportTask : public AssetImportTask
-//{
-//	AppContext& appContext;
-//	TypeTemplateCache templateCache;
-//public:
-//	TextAssetImportTask(AppContext& appContext,
-//		std::vector<AssetUtilDesc> _assets, std::vector<std::string> _importFilePaths,
-//		bool stopOnError = false)
-//
-//		: AssetImportTask(std::move(_assets), std::move(_importFilePaths), "Import TextAssets", stopOnError),
-//		  appContext(appContext)
-//	{}
-//
-//	bool importAsset(AssetUtilDesc& desc, std::string path, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager)
-//	{
-//		if (desc.asset.pFile == nullptr)
-//			throw AssetUtilError("Unable to find the target .assets file.");
-//
-//		IAssetsReader_ptr pAssetReader = desc.asset.makeReader();
-//		if (pAssetReader == nullptr)
-//			throw AssetUtilError("Unable to read the asset.");
-//		QWORD assetSize = 0;
-//		if (!pAssetReader->Seek(AssetsSeek_End, 0) || !pAssetReader->Tell(assetSize) || !pAssetReader->Seek(AssetsSeek_Begin, 0))
-//			throw AssetUtilError("Unable to read the asset.");
-//
-//		AssetTypeTemplateField& templateBase = templateCache.getTemplateField(appContext, desc.asset, &SubstituteTextAssetStringType);
-//		AssetTypeTemplateField* pTemplateBase = &templateBase;
-//
-//		AssetTypeInstance assetInstance(1, &pTemplateBase, assetSize, pAssetReader.get(), desc.asset.isBigEndian());
-//		AssetTypeValueField* pBaseField = assetInstance.GetBaseField();
-//		if (pBaseField == nullptr || pBaseField->IsDummy())
-//			throw AssetUtilError("Unable to deserialize the asset.");
-//
-//		AssetTypeValueField* scriptField = pBaseField->Get("m_Script");
-//		AssetTypeValueField* dataArrayField = scriptField->Get("Array");
-//		if (scriptField->IsDummy() || dataArrayField->GetValue() == nullptr || dataArrayField->GetValue()->GetType() != ValueType_ByteArray)
-//			throw AssetUtilError("Unexpected TextAsset format.");
-//
-//		std::unique_ptr<IAssetsReader> pTextReader(Create_AssetsReaderFromFile(path.c_str(), true, RWOpenFlags_Immediately));// desc.asset.makeReader();
-//		if (pTextReader == nullptr)
-//			throw AssetUtilError("Unable to read the text file.");
-//		QWORD textSize = 0;
-//		if (!pTextReader->Seek(AssetsSeek_End, 0) || !pTextReader->Tell(textSize) || !pTextReader->Seek(AssetsSeek_Begin, 0))
-//			throw AssetUtilError("Unable to read the text file.");
-//		if (textSize >= INT32_MAX)
-//			throw AssetUtilError("The text file is too large (should be below 2 GiB).");
-//		std::unique_ptr<uint8_t[]> textBuf(new uint8_t[(size_t)textSize]);
-//		if (pTextReader->Read(textSize, textBuf.get()) != textSize)
-//			throw AssetUtilError("Unable to read the text file.");
-//
-//		AssetTypeByteArray byteArrayValue = {};
-//		byteArrayValue.data = textBuf.get();
-//		byteArrayValue.size = (uint32_t)textSize;
-//		dataArrayField->GetValue()->Set(&byteArrayValue);
-//
-//		QWORD outSize = pBaseField->GetByteSize(0);
-//		if (outSize >= SIZE_MAX)
-//			throw AssetUtilError("Import size out of range.");
-//		std::unique_ptr<uint8_t[]> newDataBuf(new uint8_t[outSize]);
-//		std::unique_ptr<IAssetsWriter> pTempWriter(Create_AssetsWriterToMemory(newDataBuf.get(), outSize));
-//		if (pTempWriter == nullptr)
-//			throw AssetUtilError("Unexpected runtime error.");
-//		QWORD newByteSize = pBaseField->Write(pTempWriter.get(), 0, desc.asset.isBigEndian());
-//
-//		std::shared_ptr<AssetsEntryReplacer> pReplacer(MakeAssetModifierFromMemory(0, desc.asset.pathID,
-//			desc.asset.getClassID(), desc.asset.getMonoScriptID(),
-//			newDataBuf.release(), (size_t)newByteSize, FreeByteBufCallback));
-//		if (pReplacer == nullptr)
-//			throw AssetUtilError("Unexpected runtime error.");
-//		desc.asset.pFile->addReplacer(pReplacer, appContext);
-//		return true;
-//	}
-//};
+
+static void FreeByteBufCallback(void* buffer)
+{
+	if (buffer)
+		delete[](uint8_t*)buffer;
+}
+
+class TextAssetImportTask : public AssetImportTask
+{
+	AppContext& appContext;
+	TypeTemplateCache templateCache;
+public:
+	TextAssetImportTask(AppContext& appContext,
+		std::vector<AssetUtilDesc> _assets, std::vector<std::string> _importFilePaths,
+		bool stopOnError = false)
+
+		: AssetImportTask(std::move(_assets), std::move(_importFilePaths), "Import TextAssets", stopOnError),
+		  appContext(appContext)
+	{}
+
+	bool importAsset(AssetUtilDesc& desc, std::string path/*, std::optional<std::reference_wrapper<TaskProgressManager>> progressManager*/)
+	{
+		if (desc.asset.pFile == nullptr)
+			throw AssetUtilError("Unable to find the target .assets file.");
+
+		IAssetsReader_ptr pAssetReader = desc.asset.makeReader();
+		if (pAssetReader == nullptr)
+			throw AssetUtilError("Unable to read the asset.");
+		QWORD assetSize = 0;
+		if (!pAssetReader->Seek(AssetsSeek_End, 0) || !pAssetReader->Tell(assetSize) || !pAssetReader->Seek(AssetsSeek_Begin, 0))
+			throw AssetUtilError("Unable to read the asset.");
+
+		AssetTypeTemplateField& templateBase = templateCache.getTemplateField(appContext, desc.asset, &SubstituteTextAssetStringType);
+		AssetTypeTemplateField* pTemplateBase = &templateBase;
+
+		AssetTypeInstance assetInstance(1, &pTemplateBase, assetSize, pAssetReader.get(), desc.asset.isBigEndian());
+		AssetTypeValueField* pBaseField = assetInstance.GetBaseField();
+		if (pBaseField == nullptr || pBaseField->IsDummy())
+			throw AssetUtilError("Unable to deserialize the asset.");
+
+		AssetTypeValueField* scriptField = pBaseField->Get("m_Script");
+		AssetTypeValueField* dataArrayField = scriptField->Get("Array");
+		if (scriptField->IsDummy() || dataArrayField->GetValue() == nullptr || dataArrayField->GetValue()->GetType() != ValueType_ByteArray)
+			throw AssetUtilError("Unexpected TextAsset format.");
+
+		std::unique_ptr<IAssetsReader> pTextReader(Create_AssetsReaderFromFile(path.c_str(), true, RWOpenFlags_Immediately));// desc.asset.makeReader();
+		if (pTextReader == nullptr)
+			throw AssetUtilError("Unable to read the text file.");
+		QWORD textSize = 0;
+		if (!pTextReader->Seek(AssetsSeek_End, 0) || !pTextReader->Tell(textSize) || !pTextReader->Seek(AssetsSeek_Begin, 0))
+			throw AssetUtilError("Unable to read the text file.");
+		if (textSize >= INT32_MAX)
+			throw AssetUtilError("The text file is too large (should be below 2 GiB).");
+		std::unique_ptr<uint8_t[]> textBuf(new uint8_t[(size_t)textSize]);
+		if (pTextReader->Read(textSize, textBuf.get()) != textSize)
+			throw AssetUtilError("Unable to read the text file.");
+
+		AssetTypeByteArray byteArrayValue = {};
+		byteArrayValue.data = textBuf.get();
+		byteArrayValue.size = (uint32_t)textSize;
+		dataArrayField->GetValue()->Set(&byteArrayValue);
+
+		QWORD outSize = pBaseField->GetByteSize(0);
+		if (outSize >= SIZE_MAX)
+			throw AssetUtilError("Import size out of range.");
+		std::unique_ptr<uint8_t[]> newDataBuf(new uint8_t[outSize]);
+		std::unique_ptr<IAssetsWriter> pTempWriter(Create_AssetsWriterToMemory(newDataBuf.get(), outSize));
+		if (pTempWriter == nullptr)
+			throw AssetUtilError("Unexpected runtime error.");
+		QWORD newByteSize = pBaseField->Write(pTempWriter.get(), 0, desc.asset.isBigEndian());
+
+		std::shared_ptr<AssetsEntryReplacer> pReplacer(MakeAssetModifierFromMemory(0, desc.asset.pathID,
+			desc.asset.getClassID(), desc.asset.getMonoScriptID(),
+			newDataBuf.release(), (size_t)newByteSize, FreeByteBufCallback));
+		if (pReplacer == nullptr)
+			throw AssetUtilError("Unexpected runtime error.");
+		desc.asset.pFile->addReplacer(pReplacer, appContext);
+		return true;
+	}
+};
 //class TextAssetImportProvider : public IAssetOptionProviderGeneric
 //{
 //public:
